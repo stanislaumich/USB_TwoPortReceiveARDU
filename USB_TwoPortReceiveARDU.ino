@@ -1,6 +1,6 @@
 #include <SoftwareSerial.h>
 // software serial #1: RX = digital pin 10, TX = digital pin 11
-SoftwareSerial portOne(PA10, PA9);
+SoftwareSerial portOne(PA10, PA9);//pa9 white -- pa10 green
 
 // software serial #2: RX = digital pin 8, TX = digital pin 9
 // on the Mega, use other pins instead, since 8 and 9 don't work on the Mega
@@ -24,27 +24,24 @@ void loop() {
   // when you want to listen on a port, explicitly select it:
   portOne.listen();
   Serial.println("Data from port one:");
-  // while there is data coming in, read it
-  // and send to the hardware serial port:
   while (portOne.available() > 0) {
     char inByte = portOne.read();
     Serial.write(inByte);
   }
-
-  // blank line to separate data from the two ports:
-  Serial.println();
-
-  // Now listen on the second port
+// Now listen on the second port
 //--  portTwo.listen();
-  // while there is data coming in, read it
-  // and send to the hardware serial port:
 //--  Serial.println("Data from port two:");
 /*--  while (portTwo.available() > 0) {
     char inByte = portTwo.read();
     Serial.write(inByte);
   }
 --*/
-  // blank line to separate data from the two ports:
- //-- Serial.println();
+// blank line to separate data from the two ports:
+//-- Serial.println();
+ while (Serial.available() > 0) {
+    char inByte = Serial.read();
+    portOne.write(inByte);
+  }
+ 
  delay(2000);
 }
